@@ -665,7 +665,7 @@ class TestEnum(unittest.TestCase):
                     protocol=(0, HIGHEST_PROTOCOL))
 
     def test_exploding_pickle(self):
-        BadPickle = Enum('BadPickle', 'dill sweet bread-n-butter')
+        BadPickle = Enum('BadPickle', 'dill sweet bread_n_butter')
         enum._make_class_unpicklable(BadPickle)
         globals()['BadPickle'] = BadPickle
         test_pickle_exception(self.assertRaises, TypeError, BadPickle.dill)

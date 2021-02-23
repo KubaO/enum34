@@ -459,6 +459,8 @@ class EnumMeta(type):
                 member_name, member_value = item, names[item]
             else:
                 member_name, member_value = item
+            if not member_name.replace('_','').isalnum():
+                raise ValueError('invalid member name: %r -- only alpha/numeric and underscore (_) characters are supported' % (member_name, ))
             classdict[member_name] = member_value
             _order_.append(member_name)
         # only set _order_ in classdict if name/value was not from a mapping
