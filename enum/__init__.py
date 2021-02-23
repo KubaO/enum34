@@ -183,7 +183,8 @@ class EnumMeta(type):
         else:
             del classdict['_order_']
             if pyver < 3.0:
-                _order_ = _order_.replace(',', ' ').split()
+                if isinstance(_order_, basestring):
+                    _order_ = _order_.replace(',', ' ').split()
                 aliases = [name for name in members if name not in _order_]
                 _order_ += aliases
 
@@ -459,13 +460,11 @@ class EnumMeta(type):
                 member_name, member_value = item, names[item]
             else:
                 member_name, member_value = item
-            if not member_name.replace('_','').isalnum():
-                raise ValueError('invalid member name: %r -- only alpha/numeric and underscore (_) characters are supported' % (member_name, ))
             classdict[member_name] = member_value
             _order_.append(member_name)
         # only set _order_ in classdict if name/value was not from a mapping
         if not isinstance(item, basestring):
-            classdict['_order_'] = ' '.join(_order_)
+            classdict['_order_'] = _order_
         enum_class = metacls.__new__(metacls, class_name, bases, classdict)
 
         # TODO: replace the frame hack if a blessed way to know the calling

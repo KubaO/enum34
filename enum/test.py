@@ -813,6 +813,27 @@ class TestEnum(unittest.TestCase):
             self.assertTrue(e in SummerMonth)
             self.assertTrue(type(e) is SummerMonth)
 
+    def test_programatic_function_iterable_with_weird_names(self):
+        SummerMonth = Enum(
+                'SummerMonth',
+                (('june', 1), ('july', 2), ('august', 3), ('fabulous september', 4))
+                )
+        lst = list(SummerMonth)
+        self.assertEqual(len(lst), len(SummerMonth))
+        self.assertEqual(len(SummerMonth), 4, SummerMonth)
+        self.assertEqual(
+                [SummerMonth.june, SummerMonth.july, SummerMonth.august, SummerMonth['fabulous september']],
+                lst,
+                )
+        for i, month in enumerate('june july august'.split() + ['fabulous september']):
+            i += 1
+            e = SummerMonth(i)
+            self.assertEqual(int(e.value), i)
+            self.assertNotEqual(e, i)
+            self.assertEqual(e.name, month)
+            self.assertTrue(e in SummerMonth)
+            self.assertTrue(type(e) is SummerMonth)
+
     def test_programatic_function_from_dict(self):
         SummerMonth = Enum(
                 'SummerMonth',
