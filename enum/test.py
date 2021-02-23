@@ -452,8 +452,8 @@ class TestEnum(unittest.TestCase):
         self.assertEqual(dates[Season.AUTUMN], '1031')
 
     def test_enum_duplicates(self):
-        _order_ = "SPRING SUMMER AUTUMN WINTER"
         class Season(Enum):
+            _order_ = "SPRING SUMMER AUTUMN WINTER"
             SPRING = 1
             SUMMER = 2
             AUTUMN = FALL = 3
